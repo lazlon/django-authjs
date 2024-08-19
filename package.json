@@ -1,0 +1,24 @@
+{
+    "name": "django-authjs",
+    "version": "0.1.0",
+    "description": "Django adapter for Auth.js",
+    "main": "index.js",
+    "directories": {
+        "test": "tests"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/lazlon/django-authjs.git"
+    },
+    "author": "Kristóf <kristof@lazlon.com>",
+    "exports": {
+        ".": "./index.ts"
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "@auth/core": "^0.34.2"
+    },
+    "dependencies": {
+        "typescript": "^5.5.4"
+    }
+}

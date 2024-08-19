@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "django-authjs"
+version = "0.1.0"
+description = "Django adapter for Auth.js"
+authors = ["Kristóf <kristof@lazlon.com>"]
+readme = "README.md"
+license = "MIT"
+
+packages = [
+  { include = "authjs" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.1"
+
+[tool.poetry.group.dev.dependencies]
+django-stubs = "^5.0.4"
+ruff = "^0.6.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
