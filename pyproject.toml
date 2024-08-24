@@ -12,7 +12,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.12"
-django = "^5.1"
+django = "^5.0.4"
 
 [tool.poetry.group.dev.dependencies]
 django-stubs = "^5.0.4"
