@@ -13,8 +13,6 @@ function request(url: string | URL, method: "POST" | "GET" | "PUT" | "DELETE") {
         }
 
         uri.pathname += pathname
-        console.log(uri)
-        console.log(JSON.stringify(params, null, 2))
 
         const res = await fetch(uri, { method })
 

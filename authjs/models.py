@@ -53,7 +53,7 @@ class Account(m.Model):
         unique_together = ("provider", "provider_account_id")
 
     def __str__(self) -> str:
-        return self.id
+        return f"{self.user}@{self.provider}"
 
 
 # TODO: better integration with builtin sessions
@@ -83,7 +83,6 @@ class Session(session.Session):
     @expires.setter
     def expires(self, expires: datetime) -> None:
         self.expire_date = expires
-
 
     def __str__(self) -> str:
         return f"Session@{self.session_token}"

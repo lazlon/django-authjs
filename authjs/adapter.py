@@ -122,20 +122,22 @@ def update_user(user: User) -> User:
 
 def link_account(account: Account) -> Account | dict:
     try:
-        acc = m.Account(
+        acc, _ = m.Account.objects.get_or_create(
             user=m.User.objects.get(pk=account["userId"]),
             provider=account.get("provider"),
             provider_account_id=account.get("providerAccountId"),
-            access_token=account.get("access_token"),
-            token_type=account.get("token_type"),
-            id_token=account.get("id_token"),
-            refresh_token=account.get("refresh_token"),
-            scope=account.get("scope"),
-            expires_at=account.get("expires_at"),
-            session_state=account.get("session_state"),
-            type=account.get("type"),
         )
+
+        acc.access_token = account.get("access_token")
+        acc.token_type = account.get("token_type")
+        acc.id_token = account.get("id_token")
+        acc.refresh_token = account.get("refresh_token")
+        acc.scope = account.get("scope")
+        acc.expires_at = account.get("expires_at")
+        acc.session_state = account.get("session_state")
+        acc.type = account.get("type")
         acc.save()
+
         return Account(
             access_token=acc.access_token,
             token_type=acc.token_type,
