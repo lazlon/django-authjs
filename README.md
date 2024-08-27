@@ -14,7 +14,18 @@ INSTALLED_APPS = [
 ]
 ```
 
-2. Include the polls URLconf in your project urls.py
+2. Add authjs middleware after builtin auth middleware
+
+```python
+MIDDLEWARE = [
+    ...
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "authjs.middleware.AuthenticationMiddleware",
+    ...
+]
+```
+
+3. Include the polls URLconf in your project urls.py
 
 ```python
 # urls.py

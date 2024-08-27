@@ -18,7 +18,11 @@ def generate_id() -> object:
 # reusable apps are recommended to reference builtin User through ForeignKey
 # https://docs.djangoproject.com/en/5.0/topics/auth/customizing/#reusable-apps-and-auth-user-model
 class User(m.Model):
-    user = m.ForeignKey(settings.AUTH_USER_MODEL, on_delete=m.CASCADE)
+    user = m.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=m.CASCADE,
+        related_name="authjs_user",
+    )
     id = m.CharField(primary_key=True, max_length=255, default=generate_id)
     name = m.CharField(max_length=255)
     email = m.EmailField(unique=True, max_length=255, null=True)
@@ -31,7 +35,7 @@ class User(m.Model):
 
 class Account(m.Model):
     id = m.CharField(primary_key=True, max_length=255, default=generate_id)
-    user = m.ForeignKey(User, on_delete=m.CASCADE)
+    user = m.ForeignKey(User, related_name="accounts", on_delete=m.CASCADE)
     type = m.CharField(
         max_length=255,
         choices=m.TextChoices(
@@ -58,7 +62,12 @@ class Account(m.Model):
 
 # TODO: better integration with builtin sessions
 class Session(session.Session):
-    session_user = m.ForeignKey(User, on_delete=m.DO_NOTHING, db_column="user")
+    session_user = m.ForeignKey(
+        User,
+        related_name="sessions",
+        on_delete=m.DO_NOTHING,
+        db_column="user",
+    )
 
     @property
     def user(self) -> User:
@@ -85,7 +94,7 @@ class Session(session.Session):
         self.expire_date = expires
 
     def __str__(self) -> str:
-        return f"Session@{self.session_token}"
+        return f"Session@{self.user}"
 
 
 # TODO: periodically cleanup

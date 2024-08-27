@@ -8,6 +8,7 @@ SECRET_KEY = "django-insecure-6melh(uq^4%)@=%3ve&bbm9o99gb$l#&uar%3ujvmozu=m9tw1
 DEBUG = True
 
 INSTALLED_APPS = [
+    "corsheaders",
     "authjs",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -18,16 +19,21 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "authjs.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
 ROOT_URLCONF = "tests.urls"
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
 
 TEMPLATES = [
     {
