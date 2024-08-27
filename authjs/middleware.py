@@ -3,6 +3,7 @@ from collections.abc import Callable
 
 from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpRequest, HttpResponse
+from django.utils.functional import SimpleLazyObject
 
 from authjs.models import Session
 
@@ -26,7 +27,7 @@ class AuthenticationMiddleware:
 
         with contextlib.suppress(Session.DoesNotExist):
             session = Session.objects.get(session_key=token)
-            setattr(request, "user", session.user.user)  # noqa: B010
+            setattr(request, "user", SimpleLazyObject(lambda: session.user.user))  # noqa: B010
             return self.get_response(request)
 
         return self.get_response(request)
