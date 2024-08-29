@@ -24,7 +24,7 @@ class User(m.Model):
         related_name="authjs_user",
     )
     id = m.CharField(primary_key=True, max_length=255, default=generate_id)
-    name = m.CharField(max_length=255)
+    name = m.CharField(max_length=255, null=True)
     email = m.EmailField(unique=True, max_length=255, null=True)
     email_verified = m.DateTimeField(null=True)
     image = m.CharField(max_length=255, null=True)

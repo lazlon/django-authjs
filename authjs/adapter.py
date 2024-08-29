@@ -62,9 +62,9 @@ def create_user(user: User) -> User:
             "id": user.get("id"),
             "user": builtin,
             "name": user.get("name"),
-            "email": user.get("email", None),
-            "email_verified": user.get("emailVerified", None),
-            "image": user.get("image", None),
+            "email": user.get("email"),
+            "email_verified": user.get("emailVerified"),
+            "image": user.get("image"),
         },
     )
     if created:

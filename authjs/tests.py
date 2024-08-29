@@ -30,7 +30,7 @@ class User(TestCase):
         self.assertEqual(res["email"], user["email"])
 
     def get_user(self, user: adapter.User) -> None:
-        response = self.client.get(url("get-user", {"userId":user["id"]}))
+        response = self.client.get(url("get-user", {"userId": user["id"]}))
         self.assertEqual(response.status_code, 200)
 
         res: adapter.User = json.loads(response.content)
@@ -67,7 +67,7 @@ class User(TestCase):
         self.assertEqual(res["image"], user["image"])
 
     def delete_user(self, user: adapter.User) -> None:
-        response = self.client.delete(url("delete-user", {"userId":user["id"]}))
+        response = self.client.delete(url("delete-user", {"userId": user["id"]}))
         self.assertEqual(response.status_code, 200)
 
     def test_user_methods(self) -> None:
@@ -139,7 +139,6 @@ class Session(TestCase):
     def delete_session(self, session: adapter.Session) -> None:
         response = self.client.delete(url("delete-session", {**session}))
         self.assertEqual(response.status_code, 200)
-
 
     def test_in_session(self) -> None:
         user = adapter.User(
