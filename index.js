@@ -1,7 +1,13 @@
-import type { Adapter } from "@auth/core/adapters"
-
-function request(url: string | URL, method: "POST" | "GET" | "PUT" | "DELETE") {
-    return async function <T extends object>(pathname: string, params: T) {
+/**
+ * Creates a function that sends a request to the specified URL with the given method and parameters.
+ *
+ * @template P {Record<string, any>}
+ * @param {string | URL} url
+ * @param {"POST" | "GET" | "PUT" | "DELETE"} method
+ * @returns {function(string, P): Promise<Response>}
+ */
+function request(url, method) {
+    return async function (pathname, params) {
         const uri = new URL(url)
 
         for (const [name, value] of Object.entries(params)) {
@@ -13,7 +19,7 @@ function request(url: string | URL, method: "POST" | "GET" | "PUT" | "DELETE") {
         }
 
         if (!uri.pathname.endsWith("/"))
-          uri.pathname += "/"
+            uri.pathname += "/"
 
         uri.pathname += pathname
 
@@ -28,28 +34,35 @@ function request(url: string | URL, method: "POST" | "GET" | "PUT" | "DELETE") {
     }
 }
 
-function date(record: {
-    emailVerified?: string,
-    expires?: string,
-}): any {
+/**
+ * Converts string date fields to JavaScript Date objects.
+ *
+ * @param {Object} record - The record object potentially containing date strings.
+ * @param {string} [record.emailVerified]
+ * @param {string} [record.expires]
+ * @returns {Object}
+ */
+function date(record) {
     const { emailVerified, expires } = record
 
-    if (emailVerified)
+    if (emailVerified) {
         return { ...record, emailVerified: new Date(emailVerified) }
+    }
 
-    if (expires)
+    if (expires) {
         return { ...record, expires: new Date(expires) }
+    }
 
     return record
 }
 
 /**
- * Adapter for django-authjs
+ * Adapter for django-authjs.
  *
- * @param url backend server auth endpoint
- * @returns Auth.js adapter
+ * @param {string | URL} url - Backend server auth endpoint.
+ * @returns {import("@auth/core/adapters").Adapter} Auth.js adapter
  */
-export function DjangoAdapter(url: string | URL): Adapter {
+export function DjangoAdapter(url) {
     const get = request(url, "GET")
     const post = request(url, "POST")
     const put = request(url, "PUT")

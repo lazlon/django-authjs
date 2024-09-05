@@ -12,7 +12,7 @@
     },
     "author": "Kristóf <kristof@lazlon.com>",
     "exports": {
-        ".": "./index.ts"
+        ".": "./index.js"
     },
     "license": "MIT",
     "devDependencies": {
