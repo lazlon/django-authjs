@@ -12,6 +12,9 @@ function request(url: string | URL, method: "POST" | "GET" | "PUT" | "DELETE") {
                 uri.searchParams.append(name, value)
         }
 
+        if (!uri.pathname.endsWith("/"))
+          uri.pathname += "/"
+
         uri.pathname += pathname
 
         const res = await fetch(uri, { method })
