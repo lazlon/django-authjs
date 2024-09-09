@@ -1,11 +1,14 @@
 import contextlib
 from collections.abc import Callable
 
+from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpRequest, HttpResponse
 from django.utils.functional import SimpleLazyObject
 
 from authjs.models import Session
+
+TOKEN = getattr(settings, "AUTHJS_COOKIE_NAME", "authjs.session-token")
 
 
 class AuthenticationMiddleware:
@@ -13,7 +16,7 @@ class AuthenticationMiddleware:
         self.get_response = get_response
 
     def __call__(self, request: HttpRequest) -> HttpResponse:
-        token = request.COOKIES.get("authjs.session-token")
+        token = request.COOKIES.get(TOKEN)
 
         if not hasattr(request, "user"):
             raise ImproperlyConfigured(  # noqa: TRY003
