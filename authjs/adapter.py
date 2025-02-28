@@ -53,7 +53,7 @@ class VerificationToken(TypedDict):
 def create_user(user: User) -> User:
     builtin, _ = get_user_model().objects.get_or_create(
         email=user.get("email"),
-        username=user.get("name") or "",
+        username=user.get("name") or user.get("email"),
     )
 
     out, created = m.User.objects.get_or_create(
